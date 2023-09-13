@@ -8,6 +8,10 @@ const updateBlog = async (req, res) => {
         msg: "blog not found",
       });
     }
+    if (req.user.userName != blogData.userName)
+      return res.status(400).json({
+        msg: "You are not Authenticated",
+      });
     await blog.updateOne(
       { _id: req.params.id },
       {
@@ -22,9 +26,8 @@ const updateBlog = async (req, res) => {
       msg: "Blog Updated Sucessfully",
     });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({
-      msg: error,
+      msg: "Blog Updation Failed",
     });
   }
 };

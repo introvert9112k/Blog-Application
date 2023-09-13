@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.post("/signup", signupUser);
 router.post("/login", loginUser);
-router.post("/logout", authenticateToken, logOutUser);
+router.post("/logout", logOutUser);
 router.post("/refresh", refreshToken);
 router.post("/categories", authenticateToken, createCategory);
 router.post("/save/blog", authenticateToken, saveBlog);

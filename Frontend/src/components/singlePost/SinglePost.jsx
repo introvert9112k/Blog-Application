@@ -35,7 +35,7 @@ export default function SinglePost() {
       }
       if (flag) {
         try {
-          const response = await fetch(
+          let response = await fetch(
             `http://localhost:8000/api/getBlogById/${id}`,
             {
               method: "POST",
@@ -45,15 +45,16 @@ export default function SinglePost() {
               },
             }
           );
-
-          if (!response.ok) throw new Error("Fetching Failed");
+          if (!response.ok) {
+            response = await response.json();
+            throw new Error(response.msg);
+          }
           const currBlogData = await response.json();
           setBlogData(currBlogData);
         } catch (error) {
-          console.log(error);
           const alert = alertDetails;
           alert.severity = "error";
-          alert.message = "Blog Fetching Failed";
+          alert.message = error.message;
           setAlertDetails(alert);
           setOpenAlert(true);
         }
@@ -82,12 +83,16 @@ export default function SinglePost() {
             authorization: sessionStorage.getItem("accessToken"),
           },
         });
-        if (!response.ok) throw new Error("Deletion Failed");
+        if (!response.ok) {
+          response = await response.json();
+          console.log(response);
+          throw new Error(response.msg);
+        }
         navigate("/posts");
       } catch (error) {
         const alert = alertDetails;
         alert.severity = "error";
-        alert.message = "Blog Deletion Unsuccessful";
+        alert.message = error.message;
         setAlertDetails(alert);
         setOpenAlert(true);
       }

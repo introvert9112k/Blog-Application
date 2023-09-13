@@ -1,41 +1,28 @@
 import "./login.css";
 import { Link } from "react-router-dom";
 import { Snackbar, Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useState, useContext, useRef } from "react";
 import { Context } from "../../context/Context";
-import { refreshAccessToken } from "../../constants";
-import { isAcessTokenExpired } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ updateAuthStatus }) {
   const userRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
 
-  // const [userName, setUserName] = useState("");
-  // const [password, setPassword] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
   const [alertDetails, setAlertDetails] = useState({
     severity: "",
     message: "",
   });
-  // const { setUser } = useContext(DataContext);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpenAlert(false);
   };
-
-  // const userNameChangeHandler = (event) => {
-  //   setUserName(event.target.value);
-  // };
-
-  // const passwordChangeHandler = (event) => {
-  //   setPassword(event.target.value);
-  // };
 
   const loginUserHandler = async (event) => {
     event.preventDefault();
@@ -78,6 +65,7 @@ export default function Login() {
         navigate("/");
       })
       .catch((error) => {
+        console.log(error);
         dispatch({ type: "LOGIN_FAILURE" });
         const alert = alertDetails;
         alert.severity = "error";

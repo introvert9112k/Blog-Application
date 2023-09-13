@@ -55,7 +55,7 @@ export default function UpdateBlog() {
       }
       if (flag) {
         try {
-          const response = await fetch(
+          let response = await fetch(
             `http://localhost:8000/api/getBlogById/${id}`,
             {
               method: "POST",
@@ -65,13 +65,16 @@ export default function UpdateBlog() {
               },
             }
           );
-          if (!response.ok) throw new Error("Fetching Failed");
+          if (!response.ok) {
+            response = await response.json();
+            throw new Error(response.msg);
+          }
           const currBlogData = await response.json();
           setBlog(currBlogData);
         } catch (error) {
           const alert = alertDetails;
           alert.severity = "error";
-          alert.message = "Blog Fetching Failed";
+          alert.message = error.message;
           setAlertDetails(alert);
           setOpenAlert(true);
         }
@@ -94,7 +97,7 @@ export default function UpdateBlog() {
     }
     if (flag) {
       try {
-        const response = await fetch(`http://localhost:8000/api/update/${id}`, {
+        let response = await fetch(`http://localhost:8000/api/update/${id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -102,12 +105,15 @@ export default function UpdateBlog() {
           },
           body: JSON.stringify(blog),
         });
-        if (!response.ok) throw new Error("Updating Failed");
+        if (!response.ok) {
+          response = await response.json();
+          throw new Error(response.msg);
+        }
         navigate(`/post/${id}`);
       } catch (error) {
         const alert = alertDetails;
         alert.severity = "error";
-        alert.message = "Blog Updation Failed";
+        alert.message = error.message;
         setAlertDetails(alert);
         setOpenAlert(true);
       }
