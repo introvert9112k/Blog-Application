@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
-import "./homePageSideBar.css";
 import { cats } from "../../constants";
+import "../sidebar/sidebar.css";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function HomePageSidebar() {
   return (
@@ -31,12 +35,27 @@ export default function HomePageSidebar() {
       <div className="sidebarItem">
         <span className="sidebarTitle">FOLLOW US</span>
         <div className="sidebarSocial">
-          <i className="sidebarIcon fab fa-facebook-square"></i>
-          <i className="sidebarIcon fab fa-instagram-square"></i>
-          <i className="sidebarIcon fab fa-pinterest-square"></i>
-          <i className="sidebarIcon fab fa-twitter-square"></i>
+          <Link
+            to={"https://www.instagram.com/_introvert.9112k/"}
+            target="blank"
+          >
+            <InstagramIcon className="sidebarIcon" />
+          </Link>
+          <Link to={"https://twitter.com/_introvert9112k"} target="blank">
+            <TwitterIcon className="sidebarIcon" />
+          </Link>
+          <Link
+            to={"https://www.linkedin.com/in/saisri-angajala/"}
+            target="blank"
+          >
+            <LinkedInIcon className="sidebarIcon" />
+          </Link>
+
+          <Link to={"https://github.com/introvert9112k"} target="blank">
+            <GitHubIcon className="sidebarIcon" />
+          </Link>
         </div>
       </div>
     </div>
   );
-}
+} 
