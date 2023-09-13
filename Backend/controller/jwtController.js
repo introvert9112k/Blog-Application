@@ -21,7 +21,6 @@ export const authenticateToken = (req, res, next) => {
   the next() */
   jwt.verify(accessToken, process.env.ACCESS_SECRET_KEY, (error, user) => {
     if (error) {
-      console.log("autentication Failed");
       return res.status(400).json({
         msg: "Invalid Token",
       });

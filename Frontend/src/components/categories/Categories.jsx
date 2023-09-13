@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import { cats } from "../../constants";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -17,19 +18,6 @@ const MenuProps = {
     },
   },
 };
-
-const cats = [
-  "Coding",
-  "Entertainment",
-  "Education",
-  "Music",
-  "Movies",
-  "Sports",
-  "Finance",
-  "Productivity",
-  "Books",
-  "Interview",
-];
 
 export default function Category({ getCategories, blogCats }) {
   const [categories, setCategories] = React.useState([]);

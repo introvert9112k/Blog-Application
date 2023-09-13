@@ -34,7 +34,6 @@ export const signupUser = async (req, res) => {
     //saving the newUser Data to database,this is a asyncronus function
     const isUserSaved = await newUser.save();
     if (isUserSaved) {
-      console.log("sucess");
       return res.status(200).json({
         message: "Signup Successful",
       });

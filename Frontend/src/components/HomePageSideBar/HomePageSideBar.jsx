@@ -1,18 +1,6 @@
 import { Link } from "react-router-dom";
 import "./homePageSideBar.css";
-
-const cats = [
-  "Coding",
-  "Entertainment",
-  "Education",
-  "Music",
-  "Movies",
-  "Sports",
-  "Finance",
-  "Productivity",
-  "Books",
-  "Interview",
-];
+import { cats } from "../../constants";
 
 export default function HomePageSidebar() {
   return (

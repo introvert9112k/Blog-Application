@@ -6,7 +6,7 @@ env.config();
 
 const refreshToken = async (req, res) => {
   const refreshToken = req.body.refreshToken.split(" ")[1];
-  console.log(refreshToken);
+
   try {
     const { tokenDetails, error, message } = await verifyRefreshToken(
       refreshToken
@@ -19,7 +19,7 @@ const refreshToken = async (req, res) => {
       });
       return;
     }
-    console.log(tokenDetails);
+
     // Generating the new access token
     const accessToken = jwt.sign(tokenDetails, process.env.ACCESS_SECRET_KEY);
 

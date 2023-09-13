@@ -1,5 +1,23 @@
 import jwt_decode from "jwt-decode";
 
+export const cats = [
+  "Coding",
+  "Entertainment",
+  "Education",
+  "Music",
+  "Movies",
+  "Sports",
+  "Finance",
+  "Productivity",
+  "Books",
+  "Interview",
+  "Self Help",
+  "History",
+  "Health",
+  "Well Beign",
+  "Fitness",
+];
+
 const img =
   "https://images.hdqwalls.com/download/flower-dark-background-4k-xx-1920x1080.jpg";
 export default img;
