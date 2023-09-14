@@ -1,8 +1,13 @@
-import { Box, TextareaAutosize, Button, styled } from "@mui/material";
+import {
+  Box,
+  TextareaAutosize,
+  Button,
+  styled,
+  Typography,
+} from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
 import { useParams } from "react-router-dom";
-import DisplayComments from "./DisplayComments";
 import { Snackbar, Alert } from "@mui/material";
 import debounce from "lodash.debounce";
 import { isAcessTokenExpired, refreshAccessToken } from "../../constants";
@@ -14,12 +19,6 @@ const Container = styled(Box)`
   display: flex;
   margin-bottom: 20px;
 `;
-
-const Image = styled("img")({
-  width: "50px",
-  height: "40px",
-  borderRadius: "50%",
-});
 
 const StyledTextArea = styled(TextareaAutosize)`
   font-family: "Roboto, sans-serif";
@@ -50,8 +49,36 @@ const initialCommentData = {
   date: new Date(),
 };
 
+const Component = styled(Box)`
+  width: 70vw;
+  margin-top: 10px;
+  /* background: #f5f5f5; */
+  padding: 15px;
+  margin-left: 10%;
+`;
+
+const Container2 = styled(Box)`
+  display: flex;
+  margin-bottom: 5px;
+`;
+
+const Name = styled(Typography)`
+  font-weight: 600;
+  margin-right: 20px;
+`;
+
+const StyledDate = styled(Typography)`
+  color: #878787;
+  /* color : white; */
+  font-size: 14px;
+`;
+
+const StyledDescription = styled(Typography)`
+  width: 70vw;
+  word-wrap: break-word;
+`;
+
 export const Comments = ({ blogData }) => {
-  const url = "https://static.thenounproject.com/png/12017-200.png";
   const [commentData, setCommentData] = useState(initialCommentData);
   const [allCommentsData, setAllCommentsData] = useState([]);
   const { user } = useContext(Context);
@@ -108,6 +135,47 @@ export const Comments = ({ blogData }) => {
     fetchAllComments();
   }, [toggle]);
 
+  const deleteCommentHandler = async (comment) => {
+    let flag = true;
+    if (isAcessTokenExpired()) {
+      flag = await refreshAccessToken();
+    }
+    if (flag) {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/deleteComment/${comment._id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: sessionStorage.getItem("accessToken"),
+            },
+          }
+        );
+        if (!response.ok) throw new Error("Comment Deletion Failed");
+        const alert = alertDetails;
+        alert.severity = "success";
+        alert.message = "Comment Deleted Successfully";
+        setAlertDetails(alert);
+        setOpenAlert(true);
+
+        debouncedSetToggle((prevState) => !prevState);
+      } catch (error) {
+        const alert = alertDetails;
+        alert.severity = "error";
+        alert.message = "Comment Deletion Failed";
+        setAlertDetails(alert);
+        setOpenAlert(true);
+      }
+    } else {
+      const alert = alertDetails;
+      alert.severity = "error";
+      alert.message = "Authentication Failed,Please Login";
+      setAlertDetails(alert);
+      setOpenAlert(true);
+    }
+  };
+
   const commentChangeHandler = (event) => {
     setCommentData({
       ...commentData,
@@ -119,7 +187,7 @@ export const Comments = ({ blogData }) => {
 
   const debouncedSetToggle = debounce((value) => {
     setToggle(value);
-  }, 300); // Adjust the delay time as needed
+  }, 500); // Adjust the delay time as needed
 
   const addCommentHandler = async (event) => {
     let flag = true;
@@ -165,7 +233,6 @@ export const Comments = ({ blogData }) => {
     <Box>
       {/*For the commenting textarea*/}
       <Container>
-        {/* <Image src={url} alt="dp"></Image> */}
         <StyledTextArea
           minRows={1}
           placeholder="What's you think of blog"
@@ -190,16 +257,32 @@ export const Comments = ({ blogData }) => {
             .reverse()
             .map((comment) => {
               return (
-                <DisplayComments
-                  comment={comment}
-                  setToggle={debouncedSetToggle}
-                ></DisplayComments>
+                <Component>
+                  <Container2>
+                    <Name>{comment.userName}</Name>
+                    <StyledDate>
+                      {new Date(comment.date).toDateString()}
+                    </StyledDate>
+                    {user.userName === comment.userName && (
+                      //   <DeleteIcon onClick={deleteCommentHandler}></DeleteIcon>
+                      <i
+                        className="deleteIcon far fa-trash-alt"
+                        onClick={() => deleteCommentHandler(comment)}
+                      ></i>
+                    )}
+                  </Container2>
+                  <Box>
+                    <StyledDescription>
+                      {comment.commentDescription}
+                    </StyledDescription>
+                  </Box>
+                </Component>
               );
             })}
       </Box>
       <Snackbar
         open={openAlert}
-        autoHideDuration={4000}
+        autoHideDuration={2000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
