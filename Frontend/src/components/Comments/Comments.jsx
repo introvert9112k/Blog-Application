@@ -9,7 +9,7 @@ import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
 import { useParams } from "react-router-dom";
 import { Snackbar, Alert } from "@mui/material";
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
 import { isAcessTokenExpired, refreshAccessToken } from "../../constants";
 
 const Container = styled(Box)`
@@ -29,6 +29,7 @@ const StyledTextArea = styled(TextareaAutosize)`
   /* background-color: #f5f5f5; */
   outline: none;
   border: none;
+  resize: none;
   border-bottom: 2px solid black;
   &:focus-visible {
     outline: none;
@@ -97,8 +98,13 @@ export const Comments = ({ blogData }) => {
     setOpenAlert(false);
   };
 
+  const debouncedSetToggle = debounce((value) => {
+    setToggle(value);
+  }, 1500); // Adjust the delay time as needed
+
   useEffect(() => {
     const fetchAllComments = async () => {
+      console.log("function called");
       let flag = true;
       if (isAcessTokenExpired()) {
         flag = await refreshAccessToken();
@@ -142,7 +148,7 @@ export const Comments = ({ blogData }) => {
     }
     if (flag) {
       try {
-        const response = await fetch(
+        let response = await fetch(
           `http://localhost:8000/api/deleteComment/${comment._id}`,
           {
             method: "POST",
@@ -150,20 +156,24 @@ export const Comments = ({ blogData }) => {
               "Content-Type": "application/json",
               authorization: sessionStorage.getItem("accessToken"),
             },
+            body: JSON.stringify({ userName: user.userName }),
           }
         );
-        if (!response.ok) throw new Error("Comment Deletion Failed");
+        if (!response.ok) {
+          response = await response.json();
+          throw new Error(response.msg);
+        }
         const alert = alertDetails;
         alert.severity = "success";
         alert.message = "Comment Deleted Successfully";
         setAlertDetails(alert);
         setOpenAlert(true);
-
+        // setToggle((prevState) => !prevState);
         debouncedSetToggle((prevState) => !prevState);
       } catch (error) {
         const alert = alertDetails;
         alert.severity = "error";
-        alert.message = "Comment Deletion Failed";
+        alert.message = error.message;
         setAlertDetails(alert);
         setOpenAlert(true);
       }
@@ -185,10 +195,6 @@ export const Comments = ({ blogData }) => {
     });
   };
 
-  const debouncedSetToggle = debounce((value) => {
-    setToggle(value);
-  }, 500); // Adjust the delay time as needed
-
   const addCommentHandler = async (event) => {
     let flag = true;
     if (isAcessTokenExpired()) {
@@ -205,7 +211,10 @@ export const Comments = ({ blogData }) => {
           body: JSON.stringify(commentData),
         });
 
-        if (!response.ok) throw new Error("Fetching failed");
+        if (!response.ok) {
+          response = await response.json();
+          throw new Error(response.msg);
+        }
         const alert = alertDetails;
         alert.severity = "success";
         alert.message = "Comment Added Successfully";
@@ -213,10 +222,11 @@ export const Comments = ({ blogData }) => {
         setAlertDetails(alert);
         setOpenAlert(true);
         debouncedSetToggle((prevState) => !prevState);
+        // setToggle((prevState) => !prevState);
       } catch (error) {
         const alert = alertDetails;
         alert.severity = "error";
-        alert.message = "Comment Addition Unsuccessful";
+        alert.message = error.message;
         setAlertDetails(alert);
         setOpenAlert(true);
       }
@@ -258,7 +268,7 @@ export const Comments = ({ blogData }) => {
             .map((comment) => {
               return (
                 <Component>
-                  <Container2>
+                  <Container2 key={comment._id}>
                     <Name>{comment.userName}</Name>
                     <StyledDate>
                       {new Date(comment.date).toDateString()}
