@@ -60,7 +60,6 @@ export default function Write() {
   const saveBlogHandler = async (event) => {
     event.preventDefault();
     blog.userName = user.userName;
-    console.log(blog.userName);
     let flag = true;
     if (isAcessTokenExpired()) {
       flag = await refreshAccessToken();

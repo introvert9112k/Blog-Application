@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Comments from "../Comments/Comments";
 import { Context } from "../../context/Context";
 import { isAcessTokenExpired, refreshAccessToken } from "../../constants";
+import ReactMarkdown from "react-markdown";
 
 export default function SinglePost() {
   const location = useLocation();
@@ -140,7 +141,9 @@ export default function SinglePost() {
               </span>
               <span>{new Date(blogData.createdAt).toDateString()}</span>
             </div>
-            <p className="singlePostDesc">{blogData.description}</p>
+            <div className="singlePostDesc">
+              <ReactMarkdown>{blogData.description}</ReactMarkdown>
+            </div>
           </div>
           {blogData.categories && (
             <Sidebar cats={blogData.categories}></Sidebar>
