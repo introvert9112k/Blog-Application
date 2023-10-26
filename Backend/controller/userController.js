@@ -44,7 +44,7 @@ export const signupUser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       error: true,
-      message: error.message,
+      message: "Some Fields are Missing",
     });
   }
 };
