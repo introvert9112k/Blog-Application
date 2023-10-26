@@ -32,42 +32,37 @@ export default function Register() {
     setEmail(event.target.value);
   };
 
-  const signUpHandler = (event) => {
+  const signUpHandler = async (event) => {
     event.preventDefault();
     const userData = {
       userName: userName,
       password: password,
       email: email,
     };
-    console.log(userData);
-    fetch("http://localhost:8000/api/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const alert = alertDetails;
-        alert.severity = "success";
-        alert.message = "SignUp Successful, Please login";
-        setAlertDetails(alert);
-        setOpenAlert(true);
-      })
-      .catch((error) => {
-        const alert = alertDetails;
-        alert.severity = "error";
-        alert.message = "Any Field missing or credentials Already Exists";
-        setAlertDetails(alert);
-        setOpenAlert(true);
-        console.log(error);
+    try {
+      let response = await fetch("http://localhost:8000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
       });
+      if (!response.ok) {
+        response = await response.json();
+        throw new Error(response.message);
+      }
+      const alert = alertDetails;
+      alert.severity = "success";
+      alert.message = "SignUp Successful, Please login";
+      setAlertDetails(alert);
+      setOpenAlert(true);
+    } catch (error) {
+      const alert = alertDetails;
+      alert.severity = "error";
+      alert.message = error.message;
+      setAlertDetails(alert);
+      setOpenAlert(true);
+    }
   };
 
   return (

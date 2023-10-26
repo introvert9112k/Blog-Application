@@ -35,7 +35,7 @@ export const signupUser = async (req, res) => {
     const isUserSaved = await newUser.save();
     if (isUserSaved) {
       return res.status(200).json({
-        message: "Signup Successful",
+        message: "Signup Successful,Please Login",
       });
     } else
       return res.status(400).json({
