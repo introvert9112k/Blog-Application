@@ -1,15 +1,11 @@
 import express from "express";
-import env from "dotenv";
-import mongoose from "mongoose";
+import env from "dotenv"; /*package for loading the environment variables */
+import mongoose from "mongoose"; /*mongoose library for Node.js */
 import router from "./routes/route.js";
-import cors from "cors";
+import cors from "cors"; /*cross-origin-resource-sharing */
 
-// import multer from "multer";
-// import path from "path";
-// import { fileURLToPath } from "url";
-// import { dirname } from "path";
-
-const app = express();
+const app =
+  express(); /*an express application is created and stored in app variable */
 
 /*Loading the envrionment variables */
 env.config();
@@ -20,32 +16,15 @@ mongoose
   .then(() => {
     console.log("Data Base Connected Sucessfully");
   })
-  .catch((error) => console.log(error));
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-// console.log(__dirname);
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "Images");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, req.body.name);
-//   },
-// });
-
-// app.use("/Images", express.static(path.join(__dirname, "/Images")));
-
-// const upload = multer({ storage: storage });
-// app.post("/api/upload", upload.single("file"), (req, res) => {
-//   console.log("inside the rul");
-//   res.status(200).json("File has been uploaded");
-// });
+  .catch((error) => console.log("Data Base Connection Failed"));
 
 app.use(cors());
+/*This middleware parses incoming JSON data in the request body and makes it available as req.body in the route handlers.*/
 app.use(express.json());
+/*This middleware is likely intended to parse incoming text data,  */
 app.use(express.text());
+/*"/api": This is the path at which the router will be mounted. 
+Any requests that start with /api in their URL will be processed by the router. */
 app.use("/api", router);
 
 /*Creating server using express.

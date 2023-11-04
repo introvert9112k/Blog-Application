@@ -104,7 +104,6 @@ export const Comments = ({ blogData }) => {
 
   useEffect(() => {
     const fetchAllComments = async () => {
-      console.log("function called");
       let flag = true;
       if (isAcessTokenExpired()) {
         flag = await refreshAccessToken();
@@ -114,7 +113,7 @@ export const Comments = ({ blogData }) => {
           const response = await fetch(
             `http://localhost:8000/api/getAllComments/${id}`,
             {
-              method: "POST",
+              method: "GET",
               headers: {
                 "Content-Type": "application/json",
                 authorization: sessionStorage.getItem("accessToken"),
@@ -151,12 +150,11 @@ export const Comments = ({ blogData }) => {
         let response = await fetch(
           `http://localhost:8000/api/deleteComment/${comment._id}`,
           {
-            method: "POST",
+            method: "DELETE",
             headers: {
               "Content-Type": "application/json",
               authorization: sessionStorage.getItem("accessToken"),
             },
-            body: JSON.stringify({ userName: user.userName }),
           }
         );
         if (!response.ok) {

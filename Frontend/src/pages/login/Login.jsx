@@ -33,12 +33,13 @@ export default function Login({ updateAuthStatus }) {
     };
 
     try {
+      /*fetch is an web api provided by the browser */
       let response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(userData) /*converts data to json string */,
       });
       if (!response.ok) {
         response = await response.json();
@@ -75,7 +76,6 @@ export default function Login({ updateAuthStatus }) {
           className="loginInput"
           type="text"
           placeholder="Enter your username..."
-          // onChange={userNameChangeHandler}
           ref={userRef}
         />
         <label>Password</label>
@@ -83,7 +83,6 @@ export default function Login({ updateAuthStatus }) {
           className="loginInput"
           type="password"
           placeholder="Enter your password..."
-          // onChange={passwordChangeHandler}
           ref={passwordRef}
         />
         <button className="loginButton" onClick={loginUserHandler}>

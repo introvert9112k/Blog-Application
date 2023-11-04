@@ -13,4 +13,4 @@ const saveBlog = async (req, res) => {
   }
 };
 
-export default saveBlog;
+export default saveBlog; /*default export */

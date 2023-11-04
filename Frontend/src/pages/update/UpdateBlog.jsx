@@ -58,7 +58,7 @@ export default function UpdateBlog() {
           let response = await fetch(
             `http://localhost:8000/api/getBlogById/${id}`,
             {
-              method: "POST",
+              method: "GET",
               headers: {
                 "Content-Type": "application/json",
                 authorization: sessionStorage.getItem("accessToken"),
@@ -98,7 +98,7 @@ export default function UpdateBlog() {
     if (flag) {
       try {
         let response = await fetch(`http://localhost:8000/api/update/${id}`, {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             authorization: sessionStorage.getItem("accessToken"),
@@ -131,7 +131,6 @@ export default function UpdateBlog() {
   };
 
   const saveCategories = (categories) => {
-    console.log(categories);
     blog.categories = categories;
   };
 

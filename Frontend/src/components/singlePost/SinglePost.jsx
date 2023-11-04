@@ -39,7 +39,7 @@ export default function SinglePost() {
           let response = await fetch(
             `http://localhost:8000/api/getBlogById/${id}`,
             {
-              method: "POST",
+              method: "GET",
               headers: {
                 "Content-Type": "application/json",
                 authorization: sessionStorage.getItem("accessToken"),
@@ -78,7 +78,7 @@ export default function SinglePost() {
     if (flag) {
       try {
         let response = await fetch(`http://localhost:8000/api/delete/${id}`, {
-          method: "POST",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             authorization: sessionStorage.getItem("accessToken"),
@@ -86,7 +86,6 @@ export default function SinglePost() {
         });
         if (!response.ok) {
           response = await response.json();
-          console.log(response);
           throw new Error(response.msg);
         }
         navigate("/posts");

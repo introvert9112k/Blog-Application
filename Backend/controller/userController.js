@@ -49,6 +49,7 @@ export const signupUser = async (req, res) => {
   }
 };
 
+/*named export */
 export const loginUser = async (req, res) => {
   try {
     //Checking userName exists or not
@@ -76,6 +77,7 @@ export const loginUser = async (req, res) => {
       email: user.email,
       userId: user._id,
     };
+
     const { accessToken, refreshToken } = await generateToken(payload);
     return res.status(200).json({
       accessToken: accessToken,

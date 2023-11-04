@@ -21,7 +21,6 @@ export default function Homepage() {
     }
     setOpenAlert(false);
   };
-
   useEffect(() => {
     const fetchPosts = async () => {
       let flag = true;
@@ -33,7 +32,7 @@ export default function Homepage() {
           const response = await fetch(
             "http://localhost:8000/api/getBlogs" + location.search,
             {
-              method: "POST",
+              method: "GET",
               headers: {
                 "Content-Type": "application/json",
                 authorization: sessionStorage.getItem("accessToken"),
