@@ -1,7 +1,16 @@
 .posts {
   flex: 9;
+  /* 
+  - 'flex: 9;' sets the flex grow factor of the element.
+  - It indicates that the element should take up available space, 
+    but it will take 9 times the space compared to other flex items with 'flex: 1;' (or default).
+*/
   display: flex;
   flex-wrap: wrap;
+  /* 
+  - 'flex-wrap: wrap;' allows flex items to wrap onto multiple lines if they don't fit on one line.
+  - This ensures that items will move to the next line if the container is not wide enough.
+*/
   margin: 20px;
   justify-content: center;
 }
@@ -12,4 +21,4 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
+} 

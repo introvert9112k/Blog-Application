@@ -58,8 +58,29 @@
   color: #777777;
   margin-top: 15px;
   overflow: hidden;
+  /* 
+   - 'overflow: hidden;' hides any content that overflows the element's box.
+   - It can be used to hide content that exceeds the specified dimensions of the element.
+*/
   text-overflow: ellipsis;
+  /* 
+   - 'text-overflow: ellipsis;' specifies that text content that overflows the container should be truncated and replaced with an ellipsis (...).
+   - It is commonly used with a fixed width and 'overflow: hidden;' to create text truncation with an ellipsis.
+*/
   display: -webkit-box;
+  /* 
+   - 'display: -webkit-box;' establishes a block-level container box using the old WebKit box model.
+   - This is used in conjunction with other properties to create multi-line ellipsis for text.
+*/
   -webkit-line-clamp: 4;
+  /* 
+   - '-webkit-line-clamp: 4;' limits the number of lines shown in a block container to the specified number (4 in this case).
+   - This is often used in combination with '-webkit-box-orient: vertical;' to create a truncated, multi-line text with ellipsis.
+*/
+
   -webkit-box-orient: vertical;
+  /* 
+   - '-webkit-box-orient: vertical;' sets the orientation of the flexible container's children in the block progression direction (vertical).
+   - This property is commonly used with '-webkit-line-clamp' to truncate and vertically align multiline text with an ellipsis.
+*/
 }

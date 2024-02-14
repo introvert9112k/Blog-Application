@@ -9,7 +9,7 @@ export default function Sidebar(categories) {
         <ul className="sidebarList">
           {categories.cats.length > 0 ? (
             categories.cats.map((category) => (
-              <li className="sidebarListItem">
+              <li className="sidebarListItem" key={category}>
                 <Link className="link" to={`/posts?category=${category}`}>
                   {category}
                 </Link>

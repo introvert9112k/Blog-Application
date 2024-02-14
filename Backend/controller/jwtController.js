@@ -9,7 +9,6 @@ export const authenticateToken = (req, res, next) => {
   /*Access token concatenated with the bearer,so splitting by ' ' and taking 
   second value */
   const accessToken = authHeader && authHeader.split(" ")[1];
-
   /*If token doesn't come from frontend */
   if (accessToken == null)
     return res.status(400).json({

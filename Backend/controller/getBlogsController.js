@@ -1,6 +1,13 @@
 import blog from "../model/blog.js";
 const getAllBlogs = async (req, res) => {
   try {
+    /*?category=electronics&price=100&brand=example-brand.
+    req.query stores the key value pairs of the queires, in the above example
+    req.query = {
+      categroy : electronics,
+      price : 100,
+      brand : example-brand
+    }*/
     const blogCategory = req.query.category;
     const username = req.query.user;
     let blogs;

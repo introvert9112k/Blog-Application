@@ -9,13 +9,19 @@ export default function Login({ updateAuthStatus }) {
   const userRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
-
+  /*The useState hoook takes an initial value as an argument and returns 
+  an array with two elements,the current state value and a function to 
+  update that value. when the state updating function is called with 
+  new value the component is rerendered*/
   const [openAlert, setOpenAlert] = useState(false);
   const [alertDetails, setAlertDetails] = useState({
     severity: "",
     message: "",
   });
 
+  /*The useNavigate hook is part of the React Router library and is commonly used 
+  in React applications for programmatic navigation. It allows you to 
+  programmatically navigate to different routes in your application */
   const navigate = useNavigate();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -26,6 +32,7 @@ export default function Login({ updateAuthStatus }) {
 
   const loginUserHandler = async (event) => {
     event.preventDefault();
+    /*dispatching the reducer function,for updating the state */
     dispatch({ type: "LOGIN_START" });
     const userData = {
       userName: userRef.current.value,
@@ -44,7 +51,7 @@ export default function Login({ updateAuthStatus }) {
       if (!response.ok) {
         response = await response.json();
         throw new Error(response.message);
-      }
+      } 
       const data = await response.json();
       const accessToken = data.accessToken;
       const refreshToken = data.refreshToken;

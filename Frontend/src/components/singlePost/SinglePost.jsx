@@ -30,7 +30,7 @@ export default function SinglePost() {
 
   useEffect(() => {
     const fetchBlogData = async () => {
-      let flag = true;
+      let flag = sessionStorage.getItem("accessToken");
       if (isAcessTokenExpired()) {
         flag = await refreshAccessToken();
       }
@@ -71,7 +71,7 @@ export default function SinglePost() {
   }, [id]);
 
   const deleteBlogHandler = async (event) => {
-    let flag = true;
+    let flag = sessionStorage.getItem("accessToken");
     if (isAcessTokenExpired()) {
       flag = await refreshAccessToken();
     }

@@ -100,11 +100,16 @@ export const Comments = ({ blogData }) => {
 
   const debouncedSetToggle = debounce((value) => {
     setToggle(value);
-  }, 1500); // Adjust the delay time as needed
+    const alert = alertDetails;
+    alert.severity = "success";
+    alert.message = "Comment Deleted Successfully";
+    setAlertDetails(alert);
+    setOpenAlert(true);
+  }, 4000); // Adjust the delay time as needed
 
   useEffect(() => {
     const fetchAllComments = async () => {
-      let flag = true;
+      let flag = sessionStorage.getItem("accessToken");
       if (isAcessTokenExpired()) {
         flag = await refreshAccessToken();
       }
@@ -121,7 +126,7 @@ export const Comments = ({ blogData }) => {
             }
           );
           const allComments = await response.json();
-          setAllCommentsData(allComments);
+          setTimeout(() => setAllCommentsData(allComments), 1000);
         } catch (error) {
           const alert = alertDetails;
           alert.severity = "error";
@@ -141,7 +146,7 @@ export const Comments = ({ blogData }) => {
   }, [toggle]);
 
   const deleteCommentHandler = async (comment) => {
-    let flag = true;
+    let flag = sessionStorage.getItem("accessToken");
     if (isAcessTokenExpired()) {
       flag = await refreshAccessToken();
     }
@@ -164,10 +169,13 @@ export const Comments = ({ blogData }) => {
         const alert = alertDetails;
         alert.severity = "success";
         alert.message = "Comment Deleted Successfully";
-        setAlertDetails(alert);
-        setOpenAlert(true);
-        // setToggle((prevState) => !prevState);
-        debouncedSetToggle((prevState) => !prevState);
+        // debouncedSetToggle((prevState) => !prevState);
+        setTimeout(() => setToggle((prevState) => !prevState), 500);
+        setTimeout(() => {
+          setAlertDetails(alert);
+          setOpenAlert(true);
+        }, 1500);
+        // setTimeout(() => setToggle((prevState) => !prevState), 2000);
       } catch (error) {
         const alert = alertDetails;
         alert.severity = "error";
@@ -194,7 +202,7 @@ export const Comments = ({ blogData }) => {
   };
 
   const addCommentHandler = async (event) => {
-    let flag = true;
+    let flag = sessionStorage.getItem("accessToken");
     if (isAcessTokenExpired()) {
       flag = await refreshAccessToken();
     }
@@ -217,10 +225,16 @@ export const Comments = ({ blogData }) => {
         alert.severity = "success";
         alert.message = "Comment Added Successfully";
         setCommentData(initialCommentData);
-        setAlertDetails(alert);
-        setOpenAlert(true);
-        debouncedSetToggle((prevState) => !prevState);
-        // setToggle((prevState) => !prevState);
+        // setAlertDetails(alert);
+        // setOpenAlert(true);
+        // debouncedSetToggle((prevState) => !prevState);
+        setTimeout(() => {
+          setToggle((prevState) => !prevState);
+        }, 500);
+        setTimeout(() => {
+          setAlertDetails(alert);
+          setOpenAlert(true);
+        }, 1500);
       } catch (error) {
         const alert = alertDetails;
         alert.severity = "error";
@@ -265,14 +279,13 @@ export const Comments = ({ blogData }) => {
             .reverse()
             .map((comment) => {
               return (
-                <Component>
+                <Component key={comment._id}>
                   <Container2 key={comment._id}>
                     <Name>{comment.userName}</Name>
                     <StyledDate>
                       {new Date(comment.date).toDateString()}
                     </StyledDate>
                     {user.userName === comment.userName && (
-                      //   <DeleteIcon onClick={deleteCommentHandler}></DeleteIcon>
                       <i
                         className="deleteIcon far fa-trash-alt"
                         onClick={() => deleteCommentHandler(comment)}

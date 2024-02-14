@@ -14,6 +14,18 @@ export default function Homepage() {
     severity: "",
     message: "",
   });
+
+/*Here's a breakdown of the key properties provided by the useLocation hook:
+pathname:
+Represents the path portion of the URL.
+For example, if the URL is https://example.com/products, the pathname would be /products.
+search:
+Represents the query parameters of the URL.
+For example, if the URL is https://example.com/?query=react, the search would be ?query=react.
+There can be multiple queries
+Example ?category=electronics&price=100&brand=example-brand.
+Each querey is seperated by &.
+ */
   const location = useLocation();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -23,7 +35,7 @@ export default function Homepage() {
   };
   useEffect(() => {
     const fetchPosts = async () => {
-      let flag = true;
+      let flag = sessionStorage.getItem("accessToken");
       if (isAcessTokenExpired()) {
         flag = await refreshAccessToken();
       }

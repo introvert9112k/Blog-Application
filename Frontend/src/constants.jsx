@@ -24,7 +24,9 @@ export default img;
 
 export const isAcessTokenExpired = () => {
   let currentDate = new Date();
-  const decodedToken = jwt_decode(sessionStorage.getItem("accessToken"));
+  const accessToken = sessionStorage.getItem("accessToken");
+  if (!accessToken) return false;
+  const decodedToken = jwt_decode(accessToken);
   if (decodedToken.exp * 1000 < currentDate.getTime()) return true;
   else return false;
 };

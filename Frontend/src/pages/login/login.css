@@ -10,6 +10,7 @@
     ),
     url("https://images.pexels.com/photos/768473/pexels-photo-768473.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
   background-size: cover;
+  /* The cover value ensures that the background image covers the entire content box of the element without stretching or distorting it. */
 }
 
 .loginTitle {
@@ -33,6 +34,7 @@
   border-radius: 10px;
 }
 
+/*Making the outline none while writing input*/
 .loginInput:focus {
   outline: none;
 }
@@ -41,12 +43,12 @@
   margin-top: 20px;
   cursor: pointer;
   background-color: lightcoral;
-  color: white;
+  color: white; /*text color*/
   padding: 10px;
   border: none;
   border-radius: 10px;
   text-align: center;
-}
+} 
 
 .loginRegisterButton {
   position: absolute;

@@ -12,11 +12,13 @@ env.config();
 
 /*connecting the database */
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(
+    "mongodb+srv://sriangajala911:1234@cluster0.0aoamie.mongodb.net/?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("Data Base Connected Sucessfully");
   })
-  .catch((error) => console.log("Data Base Connection Failed"));
+  .catch((error) => console.log("Data Base Connection Failed", error));
 
 app.use(cors());
 /*This middleware parses incoming JSON data in the request body and makes it available as req.body in the route handlers.*/
@@ -33,5 +35,7 @@ listen function takes two arguments
 2.Call Back Function : If wish to perform something
 after the server creation, we can do it in this call back function.*/
 app.listen(process.env.PORT, () => {
-  console.log(`Sereve running Successfully on PORT ${process.env.PORT}`);
+  console.log(`Server running Successfully on PORT ${process.env.PORT}`);
 });
+
+

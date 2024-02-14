@@ -71,6 +71,7 @@ export const loginUser = async (req, res) => {
         message: "password didn't match",
       });
 
+    /*This is the payload for generating the access and refresh token */
     const payload = {
       userName: user.userName,
       password: user.password,

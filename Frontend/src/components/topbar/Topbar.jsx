@@ -25,6 +25,9 @@ export default function Topbar() {
   };
 
   const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
     dispatch({ type: "LOGOUT" });
   };
 
@@ -54,3 +57,4 @@ export default function Topbar() {
     </div>
   );
 }
+

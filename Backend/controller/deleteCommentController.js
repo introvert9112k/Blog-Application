@@ -1,7 +1,8 @@
 import comment from "../model/comment.js";
 export const deleteComment = async (req, res) => {
   try {
-    if (req.user.userName != req.body.userName)
+    const response = await comment.findOne({ _id: req.params.id });
+    if (req.user.userName != response.userName)
       return res.status(400).json({
         msg: "You are not Authenticated",
       });
