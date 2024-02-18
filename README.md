@@ -17,6 +17,8 @@ The Blog Application is a dynamic and interactive web application that showcases
 
 ## Project Video 
 
+https://github.com/introvert9112k/Blog-Application/assets/63279776/faa6afa8-0734-4215-81cc-0d4f39f5cea2
+
 ## Images 
 **Login Page** :
 ![image](https://github.com/introvert9112k/Blog-Application/assets/63279776/9d6363e5-552e-41ae-b4c3-7ac293e66fc5)
