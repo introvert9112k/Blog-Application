@@ -15,6 +15,10 @@ The Blog Application is a dynamic and interactive web application that showcases
 
 - **Error and Success Messaging System**: Integrated an intuitive messaging system that provides immediate feedback to users during their interactions with the application. Pop-up messages are utilized to communicate errors and successes effectively.
 
+## Images 
+**Login Page : **
+![image](https://github.com/introvert9112k/Blog-Application/assets/63279776/9d6363e5-552e-41ae-b4c3-7ac293e66fc5)
+
 ## Technologies Used
 
 The Blog Application is built using the following technologies:
