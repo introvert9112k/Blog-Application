@@ -3,6 +3,9 @@ import env from "dotenv";
 
 env.config();
 
+//This is the middleware to authenticateToken.
+// Using jwt.verify we check the genuinity of the token and extrac the payload
+// and store it as req.user and call the next()
 export const authenticateToken = (req, res, next) => {
   /*Getting the access token */
   const authHeader = req.headers["authorization"];

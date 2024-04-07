@@ -4,6 +4,7 @@ import env from "dotenv";
 
 env.config();
 
+// This function validates whether the token exists in the database or not
 const verifyRefreshToken = async (refreshToken) => {
   try {
     const doc = await Token.findOne({ token: refreshToken }).exec();

@@ -37,5 +37,3 @@ after the server creation, we can do it in this call back function.*/
 app.listen(process.env.PORT, () => {
   console.log(`Server running Successfully on PORT ${process.env.PORT}`);
 });
-
-

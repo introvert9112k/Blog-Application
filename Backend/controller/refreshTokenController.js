@@ -4,7 +4,9 @@ import env from "dotenv";
 
 env.config();
 
+// Function for creating the new accessToken by checking the validity of the refresh token
 const refreshToken = async (req, res) => {
+  //refersh token is coupled with berare so splitting to get refersh token
   const refreshToken = req.body.refreshToken.split(" ")[1];
 
   try {
